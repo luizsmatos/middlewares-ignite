@@ -59,13 +59,23 @@ function checksTodoExists(request, response, next) {
   }
 
   request.user = userExists;
-  request.todo = userTodoExists.todos[0]
+  request.todo = userTodoExists.todos[0];
 
   return next();
 }
 
 function findUserById(request, response, next) {
   // Complete aqui
+  const { id: user_id } = request.params;
+
+  const user = users.find((user) => user.id === user_id);
+
+  if(!user) {
+    return response.status(404);
+  }
+
+  request.user = user;
+  return next();
 }
 
 app.post("/users", (request, response) => {
